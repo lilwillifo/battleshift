@@ -9,8 +9,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :games, only: [:show] do
+      resources :games, only: [:create, :show] do
         post "/shots", to: "games/shots#create"
+        post "/ships", to: "games/ships#create"
+        #ship_1_payload
+
       end
     end
   end
