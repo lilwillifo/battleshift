@@ -15,6 +15,7 @@ class Board
     ("1".."26").to_a.shift(@length)
   end
 
+  # returns array of all spaces ['A1', 'A2', 'B1', 'B2']
   def space_names
     get_row_letters.map do |letter|
       get_column_numbers.map do |number|
@@ -28,11 +29,13 @@ class Board
       [name, Space.new(name)]
     end.to_h
   end
-
+  # wraps each space into a row array
+  #[["A1", "A2", "A3", "A4"], ["B1", "B2", "B3", "B4"], ["C1", "C2", "C3", "C4"], ["D1", "D2", "D3", "D4"]]
   def assign_spaces_to_rows
     space_names.each_slice(@length).to_a
   end
 
+  # array of row arrays, each row array has hash with 'A1' => Space object
   def create_grid
     spaces = create_spaces
     assign_spaces_to_rows.map do |row|
@@ -50,20 +53,20 @@ class Board
     end
   end
 
-  def get_spaces_between(coordinate1, coordinate2)
-    return get_row_spaces_between(coordinate1, coordinate2) if same_row?(coordinate1, coordinate2)
-    return get_column_spaces_between(coordinate1, coordinate2) if same_column?(coordinate1, coordinate2)
-  end
+  # def get_spaces_between(coordinate1, coordinate2)
+  #   return get_row_spaces_between(coordinate1, coordinate2) if same_row?(coordinate1, coordinate2)
+  #   return get_column_spaces_between(coordinate1, coordinate2) if same_column?(coordinate1, coordinate2)
+  # end
 
   # def get_row_spaces_between(coordinate1, coordinate2)
   #   columns = (get_smaller_column(coordinate1, coordinate2)..get_bigger_column(coordinate1, coordinate2)).to_a
   #   columns.map { |column| get_row(coordinate1) + column }
   # end
 
-  def get_column_spaces_between(coordinate1, coordinate2)
-    rows = (get_smaller_row(coordinate1, coordinate2)..get_bigger_row(coordinate1, coordinate2)).to_a
-    rows.map { |row| row + get_column(coordinate1) }
-  end
+  # def get_column_spaces_between(coordinate1, coordinate2)
+  #   rows = (get_smaller_row(coordinate1, coordinate2)..get_bigger_row(coordinate1, coordinate2)).to_a
+  #   rows.map { |row| row + get_column(coordinate1) }
+  # end
 
   def get_bigger_column(coordinate1, coordinate2)
     get_column(coordinate1).to_i > get_column(coordinate2).to_i ? get_column(coordinate1) : get_column(coordinate2)
@@ -203,4 +206,3 @@ class Board
     get_column(coordinate) == "1"
   end
 end
-

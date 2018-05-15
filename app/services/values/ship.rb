@@ -2,12 +2,12 @@ class Ship
   attr_reader :length, :damage, :start_space,
               :end_space
 
-  def initialize(length, start_space, end_space)
-    #refactpr to take hash as a param
-    @length = length
+  def initialize(attrs)
+    #refactor to take hash as a param
+    @length = attrs['ship_size']
     @damage = 0
-    @start_space = start_space
-    @end_space = end_space
+    @start_space = attrs['start_space']
+    @end_space = attrs['end_space']
   end
 
   def place(start_space, end_space)

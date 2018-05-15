@@ -5,8 +5,7 @@ module Api
       class ShipsController < ApiController
         def create
           ship = Ship.new(ship_params)
-          binding.pry
-          render json: ship
+          render json: current_game
         end
 
         private
