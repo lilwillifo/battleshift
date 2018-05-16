@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :user do
     name 'RBG'
-    password_digest 'kween'
+    password 'kween'
     email 'fake@example.com'
     status 'active'
   end
