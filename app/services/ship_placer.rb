@@ -16,6 +16,10 @@ class ShipPlacer
     end
   end
 
+  def message
+    "Successfully placed ship with a size of #{ship.length}. You have #{ships_remaining} ship(s) to place."
+  end
+
   private
   attr_reader :board, :ship,
     :start_space, :end_space
