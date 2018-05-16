@@ -7,12 +7,10 @@ class UsersController < ApplicationController
   def create
     user = User.new(user_params)
     if user.save
+      user_setup = UserSetup.new(user)
       session[:user_id] = user.id
-      user.apikey = SecureRandom.hex
-    
-      UserActivatorMailer.welcome_email(user).deliver_now
-      flash[:success] = "Logged in as #{user.name}"
 
+      flash[:success] = "Logged in as #{user.name}"
       redirect_to '/dashboard'
     else
       redirect_to new_user_path
