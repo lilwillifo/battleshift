@@ -6,8 +6,8 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    user_setup = UserSetup.new(user)
-    if user_setup.save
+    if user.save
+      user_setup = UserSetup.new(user)
       session[:user_id] = user.id
 
       flash[:success] = "Logged in as #{user.name}"
