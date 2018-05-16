@@ -9,10 +9,8 @@ module Api
           flash[:error] = "Sorry, #{params['opponent_email']} hasn't activated their account"
           redirect_to root
         end
-        player_1_board = Board.new(4)
-        player_2_board = Board.new(4)
 
-        game = Game.create(player_1_board: player_1_board, player_2_board: player_2_board)
+        game = Game.create(player_1: Player.new(Board.new(4), player_1.apikey), player_2: Player.new(Board.new(4), player_2.apikey))
         render json: game
       end
 

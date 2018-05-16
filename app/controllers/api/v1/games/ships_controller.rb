@@ -1,4 +1,4 @@
-class Api::V1::ShipsController < ApiController
+class Api::V1::Games::ShipsController < ApiController
   def create
     ship_placer = ShipPlacer.new(ship_placer_params)
     ship_placer.run
@@ -10,7 +10,7 @@ class Api::V1::ShipsController < ApiController
     {
       start_space: params[:start_space],
       end_space: params[:end_space],
-      board: ,
+      board: current_player.board,
       ship: Ship.new(params[:ship_size].to_i)
     }
   end
