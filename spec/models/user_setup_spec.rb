@@ -7,7 +7,7 @@ describe UserSetup, type: :model do
       UserSetup.new(user)
 
       expect(user.apikey.length).to eq(32)
-
+      expect(ActionMailer::Base.deliveries.last).to be_a Mail::Message
     end
   end
 end
