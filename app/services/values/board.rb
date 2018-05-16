@@ -205,4 +205,10 @@ class Board
   def first_column?(coordinate)
     get_column(coordinate) == "1"
   end
+
+  def spaces_occupied
+    board.flatten.count do |space|
+      space.values.first.contents
+    end
+  end
 end

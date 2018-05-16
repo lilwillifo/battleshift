@@ -3,41 +3,41 @@ require 'rails_helper'
 describe 'GET /api/v1/games/1' do
   context 'with an existing game' do
     it 'returns a game with boards' do
-      player_1_board = Board.new(4)
-      player_2_board = Board.new(4)
+      player_1 = Player.new(Board.new(4), 'klsjdhf')
+      player_2 = Player.new(Board.new(4), 'uerywkdanf')
       sm_ship = Ship.new(2)
       md_ship = Ship.new(3)
 
-      ShipPlacer.new(board: player_1_board,
+      ShipPlacer.new(board: player_1.board,
                      ship: sm_ship,
                      start_space: "A1",
                      end_space: "A2"
                     ).run
 
-      ShipPlacer.new(board: player_1_board,
+      ShipPlacer.new(board: player_1.board,
                      ship: md_ship,
                      start_space: "B1",
                      end_space: "D1"
                     ).run
 
-      ShipPlacer.new(board: player_2_board,
+      ShipPlacer.new(board: player_2.board,
                      ship: sm_ship.dup,
                      start_space: "A1",
                      end_space: "A2"
                     ).run
 
-      ShipPlacer.new(board: player_2_board,
+      ShipPlacer.new(board: player_2.board,
                      ship: md_ship.dup,
                      start_space: "B1",
                      end_space: "D1"
                     ).run
 
       game_attributes = {
-                      player_1_board: player_1_board,
-                      player_2_board: player_2_board,
+                      player_1: player_1,
+                      player_2: player_2,
                       player_1_turns: 0,
                       player_2_turns: 0,
-                      current_turn: "challenger"
+                      current_turn: "player_2"
                     }
 
       game = Game.new(game_attributes)

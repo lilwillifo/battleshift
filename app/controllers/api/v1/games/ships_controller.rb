@@ -1,19 +1,17 @@
-module Api
-  module V1
-    module Games
+class Api::V1::Games::ShipsController < ApiController
+  def create
+    ship_placer = ShipPlacer.new(ship_placer_params)
+    ship_placer.run
+    render json: current_game, message: ship_placer.message
+  end
 
-      class ShipsController < ApiController
-        def create
-          ship = Ship.new(ship_params)
-          render json: current_game
-        end
-
-        private
-        def ship_params
-          params.require(:ship).permit(:ship_size, :start_space, :end_space)
-        end
-      end
-
-    end
+  private
+  def ship_placer_params
+    {
+      start_space: params[:start_space],
+      end_space: params[:end_space],
+      board: current_player.board,
+      ship: Ship.new(params[:ship_size].to_i)
+    }
   end
 end
