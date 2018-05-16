@@ -10,7 +10,7 @@ class Api::V1::ShipsController < ApiController
     {
       start_space: params[:start_space],
       end_space: params[:end_space],
-      board: ?,
+      board: ,
       ship: Ship.new(params[:ship_size].to_i)
     }
   end

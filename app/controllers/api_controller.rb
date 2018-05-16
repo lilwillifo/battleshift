@@ -7,4 +7,5 @@ class ApiController < ActionController::API
   def current_game
     game = Game.find(params[:game_id])
   end
+
 end

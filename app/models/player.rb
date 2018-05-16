@@ -1,7 +1,8 @@
 class Player
-  attr_reader :board
+  attr_reader :board, :api_key
 
-  def initialize(board)
+  def initialize(board, api_key)
     @board = board
+    @api_key = api_key
   end
 end
