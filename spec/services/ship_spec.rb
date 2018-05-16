@@ -1,15 +1,11 @@
 require 'rails_helper'
 
 describe Ship do
-  subject { Ship.new({'ship_size' => 3,
-                      'start_space' => 'A1',
-                       'end_space' => 'A3'}) }
+  subject { Ship.new(3) }
 
   it "initializes with attributes" do
     expect(subject.length).to eq(3)
     expect(subject.damage).to eq(0)
-    expect(subject.start_space).to eq('A1')
-    expect(subject.end_space).to eq('A3')
   end
 
   describe 'instance_methods' do
