@@ -3,12 +3,10 @@ module Api
     module Games
       class ShotsController < ApiController
         def create
-          game = Game.find(params[:game_id])
-
-          turn_processor = TurnProcessor.new(game, params[:shot][:target], current_player, current_opponent)
+          turn_processor = TurnProcessor.new(current_game, params[:shot][:target], current_player, current_opponent)
 
           turn_processor.run!
-          render json: game, message: turn_processor.message
+          render json: current_game, message: turn_processor.message
         end
       end
     end
