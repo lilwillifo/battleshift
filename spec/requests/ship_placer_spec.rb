@@ -20,6 +20,7 @@ describe "Api::V1::Ships" do
       expect(game_response[:id]).to eq(game.id)
       expect(game_response[:message]).to include("Successfully placed ship with a size of 3. You have 1 ship(s) to place with a size of 2.")
 
+      game = Game.last
       space_a1 = game.player_1.board.board.first.first['A1'].contents
       expect(space_a1).to be_a(Ship)
 
