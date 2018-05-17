@@ -13,7 +13,15 @@ describe "Api::V1::Ships" do
         end_space: "A3"
       }
 
-      post "/api/v1/games/#{game.id}/ships", params: ship_1_payload, headers: headers
+      status = post "/api/v1/games/#{game.id}/ships", params: ship_1_payload, headers: headers
+
+      expect(status).to eq(200)
+      game_response = JSON.parse(response.body, symbolize_names: true)
+      expect(game_response[:id]).to eq(game.id)
+      expect(game_response[:message]).to include("Successfully placed ship with a size of 3. You have 1 ship(s) to place with a size of 2.")
+
+      space_a1 = game.player_1.board.board.first.first['A1'].contents
+      expect(space_a1).to be_a(Ship)
 
     end
   end
