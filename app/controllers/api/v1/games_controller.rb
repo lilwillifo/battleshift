@@ -11,6 +11,7 @@ module Api
         end
 
         game = Game.create(player_1: Player.new(Board.new(4), player_1.apikey), player_2: Player.new(Board.new(4), player_2.apikey))
+        # flash[:welcome] = "Ahoy! You're playing on a 4x4 grid and you have 2 ships of lengths 3 and 2 to place"
         render json: game
       end
 

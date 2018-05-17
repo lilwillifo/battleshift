@@ -2,6 +2,7 @@ class ShipPlacer
   def initialize(board:, ship:, start_space:, end_space:)
     @board       = board
     @ship        = ship
+    @ships_remaining = [3, 2]
     @start_space = start_space
     @end_space   = end_space
   end
@@ -9,28 +10,31 @@ class ShipPlacer
   def run
     if same_row?
       place_in_row
+      @ships_remaining.delete(@ship.length)
     elsif same_column?
       place_in_column
+      @ships_remaining.delete(@ship.length)
     else
       raise InvalidShipPlacement.new("Ship must be in either the same row or column.")
     end
   end
 
   def message
-    "Successfully placed ship with a size of #{ship.length}. You have #{ships_remaining} ship(s) to place with a size of #{remaining_ship_size}."
+    "Successfully placed ship with a size of #{ship.length}. You have #{@ships_remaining.length} ship(s) to place#{with_a_size_of}."
   end
+
+  def with_a_size_of
+    if @ships_remaining.length == 0
+      ""
+    else
+      " with a size of #{@ships_remaining.join(" and ")}"
+    end
+  end
+
 
   private
   attr_reader :board, :ship,
     :start_space, :end_space
-
-  def ships_remaining
-    remaining_ship_size / 2
-  end
-
-  def remaining_ship_size
-    (5 - board.spaces_occupied)
-  end
 
   def same_row?
     start_space[0] == end_space[0]
