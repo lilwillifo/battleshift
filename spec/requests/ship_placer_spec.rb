@@ -23,7 +23,20 @@ describe "Api::V1::Ships" do
       game = Game.last
       space_a1 = game.player_1.board.board.first.first['A1'].contents
       expect(space_a1).to be_a(Ship)
+    end
+    it 'A user cant place a ship diagonally' do
+      headers = {"X-API-Key" => game.player_1.api_key}
+      ship_2_payload = {
+        ship_size: 3,
+        start_space: "A1",
+        end_space: "B3"
+      }
 
+      expect(post "/api/v1/games/#{game.id}/ships", params: ship_2_payload, headers: headers).to raise_error(InvalidShipPlacement)
+
+      game = Game.last
+      space_a1 = game.player_1.board.board.first.first['A1'].contents
+      expect(space_a1).to eq(nil)
     end
   end
 end
