@@ -32,7 +32,7 @@ describe "Api::V1::Ships" do
         end_space: "B3"
       }
 
-      # expect(post "/api/v1/games/#{game.id}/ships", params: ship_2_payload, headers: headers).to raise_error(InvalidShipPlacement)
+      expect{post "/api/v1/games/#{game.id}/ships", params: ship_2_payload, headers: headers}.to raise_error(InvalidShipPlacement)
 
       game = Game.last
       space_a1 = game.player_1.board.board.first.first['A1'].contents
