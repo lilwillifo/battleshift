@@ -13,4 +13,12 @@ class ApiController < ActionController::API
     end
   end
 
+  def current_opponent
+    if current_player == current_game.player_1
+      current_game.player_2
+    elsif current_player == current_game.player_2
+      current_game.player_1
+    end
+  end
+
 end
