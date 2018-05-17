@@ -2,6 +2,7 @@ class Api::V1::Games::ShipsController < ApiController
   def create
     ship_placer = ShipPlacer.new(ship_placer_params)
     ship_placer.run
+    current_game.save!
     render json: current_game, message: ship_placer.message
   end
 
