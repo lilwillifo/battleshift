@@ -11,6 +11,7 @@ class TurnProcessor
     begin
       attack_opponent
       # ai_attack_back
+      # switch_turns
       game.save!
     rescue InvalidAttack => e
       @messages << e.message
@@ -29,6 +30,10 @@ class TurnProcessor
     result = Shooter.new(board: @current_opponent.board, target: target).fire!
     @messages << "Your shot resulted in a #{result}."
     @current_player.turns += 1 #do we want this?
+  end
+
+  def switch_turns
+    # game.current_turn = @current_opponent.api_key
   end
 
   # def ai_attack_back
