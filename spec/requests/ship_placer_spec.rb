@@ -1,32 +1,42 @@
-# require 'rails_helper'
-#
-# describe "Api::V1::Ships" do
-#   context 'POST /api/v1/games/:id/ships' do
-#     let(:sm_ship) { Ship.new(2) }
-#     let(:player_1) { Player.new(Board.new(4), 'laksfhdalsdk') }
-#     let(:player_2) { Player.new(Board.new(4), '2lak34jefmsjs') }
-#     let(:game)    {
-#       Game.create(
-#         player_1: player_1,
-#         player_2: player_2
-#       )
-#     }
-#     it "updates the contents of the spaces on the player board" do
-#       ship_1_payload = {
-#                           ship_size: 3,
-#                           start_space: "A1",
-#                           end_space: "A3"
-#                         }.to_json
-#
-#       post "/api/v1/games/#{game.id}/ships", params: ship_1_payload, :headers => {'X-API-KEY' => player_1.api_key}
-#
-#       game = Game.last
-#       game_response = JSON.parse(response.body, symbolize_names: true)
-#       expected_message = "Successfully placed ship with a size of 3. You have 1 ship(s) to place with a size of 2."
-#
-#       expect(game_response[:id]).to eq(game.id)
-#       expect(game_response[:message]).to eq expected_messages
-#       expect(game.player_1.board.board.first.first.values.first.contents.class).to eq(Ship)
-#     end
-#   end
-# end
+require 'rails_helper'
+
+describe "Api::V1::Ships" do
+  context 'POST /api/v1/games/:id/ships' do
+    player_1 = Player.new(Board.new(4), 'laksfhdalsdk')
+    player_2 = Player.new(Board.new(4), '2lak34jefmsjs')
+    let(:game) { Game.create(player_1: player_1, player_2: player_2) }
+    it "updates the contents of the spaces on the player board" do
+      headers = {"X-API-Key" => game.player_1.api_key}
+      ship_1_payload = {
+        ship_size: 3,
+        start_space: "A1",
+        end_space: "A3"
+      }
+
+      status = post "/api/v1/games/#{game.id}/ships", params: ship_1_payload, headers: headers
+
+      expect(status).to eq(200)
+      game_response = JSON.parse(response.body, symbolize_names: true)
+      expect(game_response[:id]).to eq(game.id)
+      expect(game_response[:message]).to include("Successfully placed ship with a size of 3. You have 1 ship(s) to place with a size of 2.")
+
+      game = Game.last
+      space_a1 = game.player_1.board.board.first.first['A1'].contents
+      expect(space_a1).to be_a(Ship)
+    end
+    it 'A user cant place a ship diagonally' do
+      headers = {"X-API-Key" => game.player_1.api_key}
+      ship_2_payload = {
+        ship_size: 3,
+        start_space: "A1",
+        end_space: "B3"
+      }
+
+      # expect(post "/api/v1/games/#{game.id}/ships", params: ship_2_payload, headers: headers).to raise_error(InvalidShipPlacement)
+
+      game = Game.last
+      space_a1 = game.player_1.board.board.first.first['A1'].contents
+      expect(space_a1).to eq(nil)
+    end
+  end
+end
