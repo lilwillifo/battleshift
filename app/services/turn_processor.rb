@@ -26,9 +26,9 @@ class TurnProcessor
   attr_reader :game, :target
 
   def attack_opponent
-    result = Shooter.fire!(board: @current_opponent.board, target: target)
+    result = Shooter.new(board: @current_opponent.board, target: target).fire!
     @messages << "Your shot resulted in a #{result}."
-    @current_player.turns += 1
+    @current_player.turns += 1 #do we want this?
   end
 
   # def ai_attack_back
