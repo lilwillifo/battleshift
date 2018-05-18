@@ -7,9 +7,9 @@ class Shooter
 
   def fire!
     if valid_shot?
-      space.attack!
+      "Your shot resulted in a #{space.attack!}."
     else
-      raise InvalidAttack.new("Invalid coordinates.")
+      "Invalid coordinates."
     end
   end
 
@@ -29,8 +29,8 @@ class Shooter
     end
 end
 
-class InvalidAttack < StandardError
-  def initialize(msg = "Invalid attack.")
-    super(msg)
-  end
-end
+# class InvalidAttack < StandardError
+#   def initialize(msg = "Invalid attack.")
+#     super(msg)
+#   end
+# end
