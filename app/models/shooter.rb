@@ -7,7 +7,7 @@ class Shooter
 
   def fire!
     if valid_shot?
-      "Your shot resulted in a #{space.attack!}."
+      "Your shot resulted in a #{space.attack!}"
     else
       "Invalid coordinates."
     end
