@@ -31,10 +31,10 @@ class TurnProcessor
   def attack_opponent
     result = Shooter.new(board: @current_opponent.board, target: target).fire!
     @messages << result
-    binding.pry
-    if @current_opponent.board.ships_remaining.empty?
+    if @current_opponent.board.defeated?
       @messages << "Game over."
-      @winner = @current_player.email
+      binding.pry
+      game.winner = @current_player.email
     end
     @status = 400 if result.include?('Invalid')
     switch_turns if result.include?('Your shot resulted in a')
