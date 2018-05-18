@@ -30,6 +30,7 @@ class TurnProcessor
   def attack_opponent
     result = Shooter.new(board: @current_opponent.board, target: target).fire!
     @messages << result
+    @messages << "Game over." if @current_opponent.board.ships_remaining.empty?
     @status = 400 if result.include?('Invalid')
     switch_turns if result.include?('Your shot resulted in a')
     @current_player.turns += 1 #do we want this?
