@@ -1,7 +1,9 @@
 class Api::V1::Games::ShotsController < ApiController
   def create
-    if correct_player?
+    if incorrect_player?
       render status: 400, json: current_game, message: "Invalid move. It's your opponent's turn."
+    # elsif invalid_space?
+    #   render status: 400, json: current_game, message: "Invalid coordinates"
     else
       turn_processor = TurnProcessor.new(current_game, params[:shot][:target], current_player, current_opponent)
 
@@ -12,8 +14,11 @@ class Api::V1::Games::ShotsController < ApiController
 
   private
 
-  def correct_player?
+  def incorrect_player?
     players[request.headers['X-API-KEY']] != current_game.current_turn
+  end
+
+  def invalid_space?
   end
 
   def players
