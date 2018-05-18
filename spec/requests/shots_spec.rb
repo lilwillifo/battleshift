@@ -73,11 +73,14 @@ describe "Api::V1::Shots" do
                      start_space: "A1",
                      end_space: "A2").run
 
-      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_3.api_key }
+      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_3.apikey }
       json_payload = {target: "A1"}.to_json
 
 
       post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
+
+      game = JSON.parse(response.body, symbolize_names: true)
+      expect(game[:message]).to eq "Whoops, you're not a part of this game."
     end
 
   end

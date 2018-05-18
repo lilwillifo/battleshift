@@ -41,6 +41,7 @@ describe 'POST /api/v1/games' do
       actual  = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to have_http_status(400)
+
       expect(actual[:error]).to eq("Sorry, #{opponent.email} hasn't activated their account")
 
     end
