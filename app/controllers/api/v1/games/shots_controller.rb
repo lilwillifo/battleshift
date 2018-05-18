@@ -2,6 +2,8 @@ class Api::V1::Games::ShotsController < ApiController
   def create
     if incorrect_player?
       render status: 400, json: current_game, message: "Invalid move. It's your opponent's turn."
+    elsif game_over?
+      render status: 400, json: current_game, message: "Invalid move. Game over."
     else
       turn_processor = TurnProcessor.new(current_game, params[:shot][:target], current_player, current_opponent)
 
@@ -16,6 +18,9 @@ class Api::V1::Games::ShotsController < ApiController
     players[request.headers['X-API-KEY']] != current_game.current_turn
   end
 
+  def game_over?
+    !current_game.winner.nil?
+  end
   def players
     {current_game.player_1.api_key => 'player_1',
       current_game.player_2.api_key => 'player_2'}

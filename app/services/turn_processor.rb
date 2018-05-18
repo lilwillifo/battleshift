@@ -33,7 +33,6 @@ class TurnProcessor
     @messages << result
     if @current_opponent.board.defeated?
       @messages << "Game over."
-      binding.pry
       game.winner = @current_player.email
     end
     @status = 400 if result.include?('Invalid')
