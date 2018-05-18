@@ -7,4 +7,8 @@ class Player
     @api_key = api_key
     @turns = 0
   end
+
+  def email
+    User.find_by_apikey(@api_key).email
+  end
 end

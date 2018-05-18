@@ -1,5 +1,5 @@
 class TurnProcessor
-  attr_reader :status
+  attr_reader :status, :winner
   def initialize(game, target, current_player, current_opponent)
     @game   = game
     @target = target
@@ -7,6 +7,7 @@ class TurnProcessor
     @current_opponent = current_opponent
     @current_player = current_player
     @status = 200
+    @winner = nil
   end
 
   def run!
@@ -30,7 +31,11 @@ class TurnProcessor
   def attack_opponent
     result = Shooter.new(board: @current_opponent.board, target: target).fire!
     @messages << result
-    @messages << "Game over." if @current_opponent.board.ships_remaining.empty?
+    binding.pry
+    if @current_opponent.board.ships_remaining.empty?
+      @messages << "Game over."
+      @winner = @current_player.email
+    end
     @status = 400 if result.include?('Invalid')
     switch_turns if result.include?('Your shot resulted in a')
     @current_player.turns += 1 #do we want this?
