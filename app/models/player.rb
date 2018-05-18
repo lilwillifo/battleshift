@@ -9,6 +9,10 @@ class Player
   end
 
   def email
-    User.find_by_apikey(@api_key).email
+    if User.find_by_apikey(@api_key).nil?
+      ""
+    else
+      User.find_by_apikey(@api_key).email
+    end
   end
 end
