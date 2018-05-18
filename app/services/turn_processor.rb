@@ -48,13 +48,4 @@ class TurnProcessor
   #   @messages << "The computer's shot resulted in a #{result}."
   #   game.player_2.turns += 1
   # end
-  #
-  # def player
-  #   Player.new(game.player_1_board)
-  # end
-  #
-  # def opponent
-  #   Player.new(game.player_2.board)
-  # end
-
 end
