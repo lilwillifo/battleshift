@@ -4,6 +4,7 @@ module Api
       rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
       def create
+
         player_1 = User.find_by_apikey(request.headers['X-Api-KEY'])
         if User.find_by_email(params['opponent_email']).active?
           player_2 = User.find_by_email(params['opponent_email'])
