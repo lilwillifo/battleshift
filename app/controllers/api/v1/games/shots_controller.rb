@@ -15,7 +15,7 @@ class Api::V1::Games::ShotsController < ApiController
   def incorrect_player?
     players[request.headers['X-API-KEY']] != current_game.current_turn
   end
-  
+
   def players
     {current_game.player_1.api_key => 'player_1',
       current_game.player_2.api_key => 'player_2'}
