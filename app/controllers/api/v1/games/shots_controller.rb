@@ -1,7 +1,7 @@
 class Api::V1::Games::ShotsController < ApiController
   def create
     if players[request.headers['X-API-KEY']] != current_game.current_turn
-      render json: {status: 400}
+      render status: 400, json: current_game
     else
       turn_processor = TurnProcessor.new(current_game, params[:shot][:target], current_player, current_opponent)
 

@@ -11,7 +11,7 @@ class TurnProcessor
     begin
       attack_opponent
       # ai_attack_back
-      # switch_turns
+      switch_turns
       game.save!
     rescue InvalidAttack => e
       @messages << e.message
@@ -33,7 +33,11 @@ class TurnProcessor
   end
 
   def switch_turns
-    # game.current_turn = @current_opponent.api_key
+    if game.current_turn == 'player_1'
+      game.current_turn = 'player_2'
+    else
+      game.current_turn = 'player_1'
+    end
   end
 
   # def ai_attack_back
