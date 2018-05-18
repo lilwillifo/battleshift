@@ -1,10 +1,12 @@
 class TurnProcessor
+  attr_reader :status
   def initialize(game, target, current_player, current_opponent)
     @game   = game
     @target = target
     @messages = []
     @current_opponent = current_opponent
     @current_player = current_player
+    @status = 200
   end
 
   def run!
@@ -29,6 +31,7 @@ class TurnProcessor
   def attack_opponent
     result = Shooter.new(board: @current_opponent.board, target: target).fire!
     @messages << result
+    @status = 400 if result.include?('Invalid')
     @current_player.turns += 1 #do we want this?
   end
 
