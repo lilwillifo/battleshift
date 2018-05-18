@@ -14,8 +14,8 @@ class TurnProcessor
       attack_opponent
       # ai_attack_back
       game.save!
-    rescue InvalidAttack => e
-      @messages << e.message
+    # rescue InvalidAttack => e
+    #   @messages << e.message
     end
   end
 
