@@ -1,5 +1,4 @@
 class ApiController < ActionController::API
-
   def current_game
     game_id = params[:game_id] || params[:id]
     @game ||= Game.find(game_id)
@@ -20,5 +19,4 @@ class ApiController < ActionController::API
       current_game.player_1
     end
   end
-
 end
