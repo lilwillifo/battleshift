@@ -2,8 +2,10 @@ require 'rails_helper'
 
 describe TurnProcessor do
   let(:board) { double('board') }
-  let(:player_1) { Player.new(board, 'setnd') }
-  let(:player_2) { Player.new(board, 'setndarst') }
+  let(:user) { create(:user, apikey: SecureRandom.hex) }
+  let(:user_2) { create(:user, apikey: SecureRandom.hex) }
+  let(:player_1) { Player.new(board, user.apikey) }
+  let(:player_2) { Player.new(board, user_2.apikey) }
 
   let(:game) { Game.new(player_1: player_1, player_2: player_2)}
 
@@ -18,14 +20,11 @@ describe TurnProcessor do
       it "does a turn" do
         expect(game.current_turn).to eq("player_1")
 
-        allow_any_instance_of(Shooter).to receive(:fire!).and_return('Miss')
-        # allow_any_instance_of(Shooter).to receive(:message).and_return(nil)
-        # board.should_receive(:space_names).and_return(["A1", "A2", "A3", "A4"])
+        allow_any_instance_of(Shooter).to receive(:fire!).and_return('Your shot resulted in a Miss')
         allow(board).to receive(:defeated?).and_return(false)
+        # allow_any_instance_of(Player).to receive(:turns).and_return(1)
+
         subject.run!
-
-
-        # allow(board).to receive(:space_names).and_return(["A1", "A2", "A3", "A4"])
 
         expect(game.current_turn).to eq("player_2")
       end

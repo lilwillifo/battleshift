@@ -37,7 +37,7 @@ class TurnProcessor
     end
     @status = 400 if result.include?('Invalid')
     switch_turns if result.include?('Your shot resulted in a')
-    @current_player.turns += 1 #do we want this?
+    # @current_player.turns += 1 #do we want this?
   end
 
   def switch_turns
