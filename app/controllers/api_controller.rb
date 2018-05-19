@@ -1,4 +1,6 @@
 class ApiController < ActionController::API
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
   def current_game
     game_id = params[:game_id] || params[:id]
     @game ||= Game.find(game_id)
@@ -19,4 +21,9 @@ class ApiController < ActionController::API
       current_game.player_1
     end
   end
+  
+  def record_not_found(exception)
+    render json: {error: exception.message}, status: 400
+  end
+
 end

@@ -40,6 +40,6 @@ class Api::V1::Games::ShotsController < ApiController
   end
 
   def player_in_game?
-    players.keys.any? {|x| x.include?(request.headers['X-API-KEY']) }
+    players.keys.any? {|player_key| player_key.include?(request.headers['X-API-KEY']) }
   end
 end
