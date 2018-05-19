@@ -22,11 +22,11 @@ describe TurnProcessor do
 
         allow_any_instance_of(Shooter).to receive(:fire!).and_return('Your shot resulted in a Miss')
         allow(board).to receive(:defeated?).and_return(false)
-        # allow_any_instance_of(Player).to receive(:turns).and_return(1)
 
         subject.run!
 
         expect(game.current_turn).to eq("player_2")
+        expect(subject.message).to eq('Your shot resulted in a Miss')
       end
     end
   end
