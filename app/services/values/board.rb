@@ -55,12 +55,6 @@ class Board
     end
   end
 
-  # def defeated?
-  #   board.flatten.all? do |space|
-  #     space.values.first.contents.nil? || space.values.first.contents.is_sunk?
-  #   end
-  # end
-
 def defeated?
   unless empty_board?
     board_values.all? do |space|
