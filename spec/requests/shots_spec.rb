@@ -61,6 +61,35 @@ describe "Api::V1::Shots" do
       expect(player_2_targeted_space).to eq("Miss")
     end
 
+    it "lets players take turns" do
+      ShipPlacer.new(board: player_2.board,
+                     ship: sm_ship,
+                     start_space: "A1",
+                     end_space: "A2").run
+
+      ShipPlacer.new(board: player_1.board,
+                     ship: sm_ship,
+                     start_space: "A1",
+                     end_space: "A2").run
+
+      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_1.api_key }
+      p2_headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_2.api_key }
+      json_payload = {target: "A4"}.to_json
+
+      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
+
+      expect(response).to be_success
+      turn_1 = JSON.parse(response.body, symbolize_names: true)
+
+      expect(turn_1[:current_turn]).to eq "player_2"
+
+      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: p2_headers
+
+      turn_2 = JSON.parse(response.body, symbolize_names: true)
+
+      expect(turn_2[:current_turn]).to eq "player_1"
+    end
+
     it "updates the message but not the board with invalid coordinates" do
       headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_1.api_key }
       json_payload = {target: "D15"}.to_json
