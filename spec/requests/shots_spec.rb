@@ -2,8 +2,10 @@ require 'rails_helper'
 
 describe "Api::V1::Shots" do
   context "POST /api/v1/games/:id/shots" do
-    let(:player_1)   { Player.new(Board.new(4),'kasjdfhlai4oeiufrwh')}
-    let(:player_2)   { Player.new(Board.new(4), 'lskdkw4y1iou3y4edb') }
+    let(:user) { create(:user, apikey: SecureRandom.hex) }
+    let(:user_2) { create(:user, apikey: SecureRandom.hex) }
+    let(:player_1)   { Player.new(Board.new(4), user.apikey)}
+    let(:player_2)   { Player.new(Board.new(4), user_2.apikey) }
     let(:sm_ship) { Ship.new(2) }
     let(:game)  {
       create(:game,
@@ -80,7 +82,7 @@ describe "Api::V1::Shots" do
       post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
 
       game = JSON.parse(response.body, symbolize_names: true)
-      expect(game[:message]).to eq "Whoops, you're not a part of this game."
+      expect(game[:message]).to eq "Unauthorized"
     end
 
     it "won't let another player move if it's not their turn" do
