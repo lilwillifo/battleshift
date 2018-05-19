@@ -55,11 +55,23 @@ class Board
     end
   end
 
-  def defeated?
-    board.flatten.all? do |space|
+def defeated?
+  unless empty_board?
+    board_values.all? do |space|
       space.values.first.contents.nil? || space.values.first.contents.is_sunk?
     end
   end
+end
+
+def empty_board?
+  board_values.all? do |space|
+    space.values.first.contents.nil?
+  end
+end
+
+def board_values
+  board.flatten
+end
 
   # def get_spaces_between(coordinate1, coordinate2)
   #   return get_row_spaces_between(coordinate1, coordinate2) if same_row?(coordinate1, coordinate2)
