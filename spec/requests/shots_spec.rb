@@ -83,5 +83,13 @@ describe "Api::V1::Shots" do
       expect(game[:message]).to eq "Whoops, you're not a part of this game."
     end
 
+    it "won't let another player move if it's not their turn" do
+      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_2.api_key }
+      json_payload = {target: "B2"}.to_json
+      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
+      game = JSON.parse(response.body, symbolize_names: true)
+      expect(game[:message]).to eq "Invalid move. It's your opponent's turn."
+    end
+
   end
 end
