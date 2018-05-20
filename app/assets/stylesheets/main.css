@@ -32,19 +32,23 @@ h1 {
   font-size: 30px;
 }
 
-
-
 .menu {
   margin-right: 15px;
   font-size: 20px;
 }
 
-img {
-  width: 100%;
-  margin: 0;
+.main {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 100px;
+  text-transform: uppercase;
+  text-decoration: none;
 }
 
-p {
-  font-size: 14px;
-  margin: 0;
+.ship {
+  position: absolute;
+  top: 40%;
+  left: 40%;
 }
