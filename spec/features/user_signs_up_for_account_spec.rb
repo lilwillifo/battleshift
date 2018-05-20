@@ -8,7 +8,6 @@ describe 'As a guest user' do
 
       expect(current_path).to eq "/register"
 
-      expect(ActionMailer::Base.deliveries.size).to eq(0)
       fill_in "user[email]", with: 'ilanarox@fake.com'
       fill_in "user[name]", with: 'Josh'
       fill_in "user[password]", with: 'vErYsEcUrE'
@@ -19,7 +18,7 @@ describe 'As a guest user' do
       user = User.last
       expect(user.name).to eq('Josh')
       expect(user.email).to eq('ilanarox@fake.com')
-      expect(ActionMailer::Base.deliveries.size).to (1)
+      expect(ActionMailer::Base.deliveries.last).to be_a(Mail::Message)
       expect(page).to have_content "Logged in as Josh"
       expect(page).to have_content "This account has not yet been activated. Please check your email."
     end
