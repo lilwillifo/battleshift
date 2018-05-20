@@ -2,20 +2,25 @@ require 'rails_helper'
 
 describe 'As a registered user' do
   context "When I visit /" do
-    let(:user) { create(:user, apikey: SecureRandom.hex) }
     it "I can log in and out" do
+      user = create(:user, apikey: SecureRandom.hex)
       visit "/"
       click_on "Log in"
 
-      expect(current_path).to eq "/log_in"
+      expect(current_path).to eq "/login"
 
-      fill_in "user[email]", with: 'ilanarox@fake.com'
-      fill_in "user[password]", with: 'vErYsEcUrE'
-      fill_in "user[password_confirmation]", with: 'vErYsEcUrE'
-      click_on "Submit"
+      fill_in "email", with: 'fake@example.com'
+      fill_in "password", with: 'kween'
+
+      click_on "Login"
 
       expect(current_path).to eq "/dashboard"
       expect(page).to have_content "Log out"
+
+      click_on "Log out"
+
+      expect(current_path).to eq "/"
+      expect(page).to have_content "Log in"
     end
   end
 end
