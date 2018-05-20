@@ -13,7 +13,8 @@ class UsersController < ApplicationController
       flash[:success] = "Logged in as #{user.name}"
       redirect_to '/dashboard'
     else
-      redirect_to new_user_path
+      flash[:error] = "Sorry, please try again."
+      redirect_to '/register'
     end
   end
 
