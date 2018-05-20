@@ -8,8 +8,8 @@ class Api::V1::Games::ShotsController < ApiController
       render status: 400, json: current_game, message: "Invalid move. Game over."
     else
       turn_processor = TurnProcessor.new(current_game, params[:shot][:target], current_player, current_opponent)
-
       turn_processor.run!
+      
       render status: turn_processor.status, winner: turn_processor.winner, json: current_game, message: turn_processor.message
     end
   end

@@ -1,4 +1,6 @@
 class Game < ApplicationRecord
+  validates_presence_of :player_1, :player_2
+  
   attr_accessor :messages
 
   enum current_turn: ["player_1", "player_2"]

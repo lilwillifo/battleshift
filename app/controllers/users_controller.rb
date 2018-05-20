@@ -17,7 +17,7 @@ class UsersController < ApplicationController
       redirect_to '/register'
     end
   end
-
+  
   def show
   end
 
