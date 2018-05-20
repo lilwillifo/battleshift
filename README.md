@@ -33,6 +33,8 @@ To run the test suite, run `rspec` from the root directory in your terminal afte
 * [factorybot](https://github.com/thoughtbot/factory_bot)
 * [shoulda matchers](https://github.com/thoughtbot/shoulda-matchers)
 * [capybara](https://github.com/teamcapybara/capybara)
+* The original brownfield application: [Original Battleshift](https://github.com/turingschool-examples/battleshift)
+* The spec harness used to drive functionality: [Spec Harness](https://github.com/turingschool-examples/battleshift_spec_harness)
 
 ## Deployment
 Visit the application deployed to Heroku [here](https://immense-woodland-83336.herokuapp.com/). Register for an account then check your email for your API key and account activation. This application requires [Postman](https://www.getpostman.com/) to post requests to the API.
