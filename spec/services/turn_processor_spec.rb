@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe TurnProcessor do
-  let(:board) { double('board') }
-  let(:user) { create(:user, apikey: SecureRandom.hex) }
-  let(:user_2) { create(:user, apikey: SecureRandom.hex) }
+  let(:board)    { double('board') }
+  let(:user)     { create(:user, apikey: SecureRandom.hex) }
+  let(:user_2)   { create(:user, apikey: SecureRandom.hex) }
   let(:player_1) { Player.new(board, user.apikey) }
   let(:player_2) { Player.new(board, user_2.apikey) }
 
