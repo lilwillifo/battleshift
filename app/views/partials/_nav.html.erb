@@ -2,5 +2,11 @@
   <h1>
     BATTLESHIFT
   </h1>
-    <div class='menu'> <%= link_to 'About', "https://en.wikipedia.org/wiki/Battleship_(game)" %></div>
+    <div class='menu'>
+      <% if session[:user_id] == nil %>
+        <%= link_to 'Log in', log_in_path %>
+      <% else %>
+        <%= link_to 'Log out', log_out_path %>
+      <% end %>
+      <%= link_to 'About', "https://en.wikipedia.org/wiki/Battleship_(game)" %></div>
 </nav>
