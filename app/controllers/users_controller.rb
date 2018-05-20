@@ -17,6 +17,9 @@ class UsersController < ApplicationController
       redirect_to '/register'
     end
   end
+  
+  def show
+  end
 
   def update
     user = User.find(params[:id])
