@@ -13,6 +13,7 @@ describe "Api::V1::Shots" do
         player_2: player_2
       )
     }
+    let(:headers) { { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_1.api_key } }
 
     it "updates the message and board with a hit" do
       ShipPlacer.new(board: player_2.board,
@@ -20,18 +21,12 @@ describe "Api::V1::Shots" do
                      start_space: "A1",
                      end_space: "A2").run
 
-      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_1.api_key }
       json_payload = {target: "A1"}.to_json
 
       response = stub_request(:post, "http://localhost:3000/api/v1/games/#{game.id}/shots").
           with(headers: headers, body: json_payload).
           to_return(status: 200, body: File.read("./spec/fixtures/user_posts_shot.json"))
 
-      #
-      # post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
-      # binding.pry
-
-      # expect(response).to be_success
 
       game = JSON.parse(response.response.body, symbolize_names: true)
 
@@ -49,7 +44,6 @@ describe "Api::V1::Shots" do
                      start_space: "A1",
                      end_space: "A2").run
 
-      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_1.api_key }
       json_payload = {target: "A4"}.to_json
 
       post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
@@ -77,7 +71,6 @@ describe "Api::V1::Shots" do
                      start_space: "A1",
                      end_space: "A2").run
 
-      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_1.api_key }
       p2_headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_2.api_key }
       json_payload = {target: "A4"}.to_json
 
@@ -96,8 +89,21 @@ describe "Api::V1::Shots" do
     end
 
     it "updates the message but not the board with invalid coordinates" do
-      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_1.api_key }
       json_payload = {target: "D15"}.to_json
+      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
+      game = JSON.parse(response.body, symbolize_names: true)
+      expect(game[:message]).to eq "Invalid coordinates."
+    end
+
+    it "invalid shot coordinates (string) updates the message but not the board" do
+      json_payload = {target: "steve"}.to_json
+      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
+      game = JSON.parse(response.body, symbolize_names: true)
+      expect(game[:message]).to eq "Invalid coordinates."
+    end
+
+    it "invalid shot coordinates (integer) updates the message but not the board" do
+      json_payload = {target: "99"}.to_json
       post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
       game = JSON.parse(response.body, symbolize_names: true)
       expect(game[:message]).to eq "Invalid coordinates."
@@ -110,20 +116,20 @@ describe "Api::V1::Shots" do
                      start_space: "A1",
                      end_space: "A2").run
 
-      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_3.apikey }
+      p3_headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_3.apikey }
       json_payload = {target: "A1"}.to_json
 
 
-      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
+      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: p3_headers
 
       game = JSON.parse(response.body, symbolize_names: true)
       expect(game[:message]).to eq "Unauthorized"
     end
 
     it "won't let another player move if it's not their turn" do
-      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_2.api_key }
+      p2_headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_2.api_key }
       json_payload = {target: "B2"}.to_json
-      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
+      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: p2_headers
       game = JSON.parse(response.body, symbolize_names: true)
       expect(game[:message]).to eq "Invalid move. It's your opponent's turn."
     end
