@@ -1,19 +1,42 @@
-# README
+# BattleShift
 
-* Ruby version: 2.4.1+
+* An API for multi-player battleship.
+* This is a brownfield project built on top of an existing battleship game for a single player and computer. Players sign up for an account, and will receive an email with their API key and a link to activate their account. Once activated, they are able to send post requests using their API key to create a new game, place their ships and fire shots on the opposing player.
+* The deployed version can be found here: [BattleShift] (https://immense-woodland-83336.herokuapp.com/)
+* The spec for this project can be found here: [Project Spec](http://backend.turing.io/module3/projects/battleshift)
 
-* System dependencies
+## Getting Started
 
-* Configuration
+To run this application locally for testing and development, clone this repo and follow the steps below:
 
-* Database creation
+Bundle:
+`$ bundle`
 
-* Database initialization
+Set up the database:
+`$ rake db:create`
+`$ rake db:migrate`
 
-* How to run the test suite
+Start up your rails server with `rails s`
+and open localhost:3000 in your browser.
 
-* Services (job queues, cache servers, search engines, etc.)
+### Prerequisites
 
-* Deployment instructions
+Ruby Version: 2.4+
+Rails Version: 5+
 
-* ...
+## Running the tests
+
+To run the test suite, run `rspec` from the root directory in your terminal after following the Getting Started instructions above.
+
+## Built With
+
+* [factorybot](https://github.com/thoughtbot/factory_bot)
+* [shoulda matchers](https://github.com/thoughtbot/shoulda-matchers)
+* [capybara](https://github.com/teamcapybara/capybara)
+
+## Deployment
+Visit the application deployed to Heroku [here](https://immense-woodland-83336.herokuapp.com/). Register for an account then check your email for your API key and account activation. This application requires [Postman](https://www.getpostman.com/) to post requests to the API.
+
+## Authors
+* [Margaret Williford](https://github.com/lilwillifo)
+* [Megan Arellano](https://github.com/ssciolist)
