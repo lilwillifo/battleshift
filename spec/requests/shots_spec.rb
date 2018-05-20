@@ -134,5 +134,13 @@ describe "Api::V1::Shots" do
       expect(game[:message]).to eq "Invalid move. It's your opponent's turn."
     end
 
+    it "won't allow play with an invalid API key" do
+      fake_headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => "oriestns293" }
+      json_payload = {target: "B2"}.to_json
+      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: fake_headers
+      game = JSON.parse(response.body, symbolize_names: true)
+      expect(game[:message]).to eq "Unauthorized"
+    end
+
   end
 end
