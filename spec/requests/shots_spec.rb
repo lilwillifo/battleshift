@@ -23,12 +23,17 @@ describe "Api::V1::Shots" do
       headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_1.api_key }
       json_payload = {target: "A1"}.to_json
 
+      response = stub_request(:post, "http://localhost:3000/api/v1/games/#{game.id}/shots").
+          with(headers: headers, body: json_payload).
+          to_return(status: 200, body: File.read("./spec/fixtures/user_posts_shot.json"))
 
-      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
+      #
+      # post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
+      # binding.pry
 
-      expect(response).to be_success
+      # expect(response).to be_success
 
-      game = JSON.parse(response.body, symbolize_names: true)
+      game = JSON.parse(response.response.body, symbolize_names: true)
 
       expected_messages = "Your shot resulted in a Hit"
       player_2_targeted_space = game[:player_2_board][:rows].first[:data].first[:status]
