@@ -3,11 +3,10 @@
     BATTLESHIFT
   </h1>
     <div class='menu'>
-      <% if current_user == nil %>
+      <% if session[:user_id] == nil %>
         <%= link_to 'Log in', log_in_path %>
-      <% elsif current_user %>
-        <%= link_to 'Log out', log_out_path %>
       <% else %>
+        <%= link_to 'Log out', log_out_path %>
       <% end %>
       <%= link_to 'About', "https://en.wikipedia.org/wiki/Battleship_(game)" %></div>
 </nav>
