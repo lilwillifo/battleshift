@@ -9,6 +9,7 @@
   </head>
 
   <body>
+    <%= render partial: 'partials/nav' %>
     <% flash.each do |type, message| %>
       <%= content_tag :div, sanitize(message), class: type %>
     <% end %>
