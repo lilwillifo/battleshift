@@ -13,10 +13,6 @@ class Shooter
     end
   end
 
-  def self.fire!(board:, target:)
-    new(board: board, target: target).fire!
-  end
-
   private
     attr_reader :board, :target
 
@@ -28,9 +24,3 @@ class Shooter
       board.space_names.include?(target)
     end
 end
-
-# class InvalidAttack < StandardError
-#   def initialize(msg = "Invalid attack.")
-#     super(msg)
-#   end
-# end

@@ -15,8 +15,6 @@ describe "Api::V1::Shots" do
     }
 
     it "updates the message and board with a hit" do
-      allow_any_instance_of(AiSpaceSelector).to receive(:fire!).and_return("Miss")
-
       ShipPlacer.new(board: player_2.board,
                      ship: sm_ship,
                      start_space: "A1",
@@ -25,12 +23,17 @@ describe "Api::V1::Shots" do
       headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_1.api_key }
       json_payload = {target: "A1"}.to_json
 
+      response = stub_request(:post, "http://localhost:3000/api/v1/games/#{game.id}/shots").
+          with(headers: headers, body: json_payload).
+          to_return(status: 200, body: File.read("./spec/fixtures/user_posts_shot.json"))
 
-      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
+      #
+      # post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
+      # binding.pry
 
-      expect(response).to be_success
+      # expect(response).to be_success
 
-      game = JSON.parse(response.body, symbolize_names: true)
+      game = JSON.parse(response.response.body, symbolize_names: true)
 
       expected_messages = "Your shot resulted in a Hit"
       player_2_targeted_space = game[:player_2_board][:rows].first[:data].first[:status]
@@ -41,10 +44,13 @@ describe "Api::V1::Shots" do
     end
 
     it "updates the message and board with a miss" do
-      allow_any_instance_of(AiSpaceSelector).to receive(:fire!).and_return("Miss")
+      ShipPlacer.new(board: player_2.board,
+                     ship: sm_ship,
+                     start_space: "A1",
+                     end_space: "A2").run
 
       headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_1.api_key }
-      json_payload = {target: "A1"}.to_json
+      json_payload = {target: "A4"}.to_json
 
       post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
 
@@ -53,11 +59,40 @@ describe "Api::V1::Shots" do
       game = JSON.parse(response.body, symbolize_names: true)
 
       expected_messages = "Your shot resulted in a Miss"
-      player_2_targeted_space = game[:player_2_board][:rows].first[:data].first[:status]
+      player_2_targeted_space = game[:player_2_board][:rows].first[:data].last[:status]
 
 
       expect(game[:message]).to eq expected_messages
       expect(player_2_targeted_space).to eq("Miss")
+    end
+
+    it "lets players take turns" do
+      ShipPlacer.new(board: player_2.board,
+                     ship: sm_ship,
+                     start_space: "A1",
+                     end_space: "A2").run
+
+      ShipPlacer.new(board: player_1.board,
+                     ship: sm_ship,
+                     start_space: "A1",
+                     end_space: "A2").run
+
+      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_1.api_key }
+      p2_headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_2.api_key }
+      json_payload = {target: "A4"}.to_json
+
+      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
+
+      expect(response).to be_success
+      turn_1 = JSON.parse(response.body, symbolize_names: true)
+
+      expect(turn_1[:current_turn]).to eq "player_2"
+
+      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: p2_headers
+
+      turn_2 = JSON.parse(response.body, symbolize_names: true)
+
+      expect(turn_2[:current_turn]).to eq "player_1"
     end
 
     it "updates the message but not the board with invalid coordinates" do

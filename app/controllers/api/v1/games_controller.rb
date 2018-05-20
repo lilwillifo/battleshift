@@ -1,8 +1,6 @@
 module Api
   module V1
-    class GamesController < ActionController::API
-      rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-
+    class GamesController < ApiController
       def create
 
         player_1 = User.find_by_apikey(request.headers['X-Api-KEY'])
@@ -21,10 +19,6 @@ module Api
         game = Game.find(params[:id])
 
         render json: game
-      end
-
-      def record_not_found(exception)
-        render json: {error: exception.message}, status: 400
       end
     end
   end

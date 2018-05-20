@@ -1,10 +1,14 @@
 require 'rails_helper'
 
 describe "Api::V1::Ships" do
+  let(:board)    { double('board') }
+  let(:user)     { create(:user, apikey: SecureRandom.hex) }
+  let(:user_2)   { create(:user, apikey: SecureRandom.hex) }
+  let(:player_1) { Player.new(Board.new(4), user.apikey) }
+  let(:player_2) { Player.new(Board.new(4), user_2.apikey) }
+  let(:game)     { Game.create(player_1: player_1, player_2: player_2) }
+
   context 'POST /api/v1/games/:id/ships' do
-    player_1 = Player.new(Board.new(4), 'laksfhdalsdk')
-    player_2 = Player.new(Board.new(4), '2lak34jefmsjs')
-    let(:game) { Game.create(player_1: player_1, player_2: player_2) }
     it "updates the contents of the spaces on the player board" do
       headers = {"X-API-Key" => game.player_1.api_key}
       ship_1_payload = {

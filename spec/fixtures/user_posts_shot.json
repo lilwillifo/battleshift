@@ -1,0 +1,56 @@
+{"id":1204,
+ "message":"Your shot resulted in a Hit",
+ "current_turn":"player_2",
+ "player_1_board":
+  {"rows":
+    [{"name":"row_a",
+      "data":
+       [{"coordinates":"A1", "status":"Not Attacked"},
+        {"coordinates":"A2", "status":"Not Attacked"},
+        {"coordinates":"A3", "status":"Not Attacked"},
+        {"coordinates":"A4", "status":"Not Attacked"}]},
+     {"name":"row_b",
+      "data":
+       [{"coordinates":"B1", "status":"Not Attacked"},
+        {"coordinates":"B2", "status":"Not Attacked"},
+        {"coordinates":"B3", "status":"Not Attacked"},
+        {"coordinates":"B4", "status":"Not Attacked"}]},
+     {"name":"row_c",
+      "data":
+       [{"coordinates":"C1", "status":"Not Attacked"},
+        {"coordinates":"C2", "status":"Not Attacked"},
+        {"coordinates":"C3", "status":"Not Attacked"},
+        {"coordinates":"C4", "status":"Not Attacked"}]},
+     {"name":"row_d",
+      "data":
+       [{"coordinates":"D1", "status":"Not Attacked"},
+        {"coordinates":"D2", "status":"Not Attacked"},
+        {"coordinates":"D3", "status":"Not Attacked"},
+        {"coordinates":"D4", "status":"Not Attacked"}]}]},
+ "player_2_board":
+  {"rows":
+    [{"name":"row_a",
+      "data":
+       [{"coordinates":"A1", "status":"Hit"},
+        {"coordinates":"A2", "status":"Not Attacked"},
+        {"coordinates":"A3", "status":"Not Attacked"},
+        {"coordinates":"A4", "status":"Not Attacked"}]},
+     {"name":"row_b",
+      "data":
+       [{"coordinates":"B1", "status":"Not Attacked"},
+        {"coordinates":"B2", "status":"Not Attacked"},
+        {"coordinates":"B3", "status":"Not Attacked"},
+        {"coordinates":"B4", "status":"Not Attacked"}]},
+     {"name":"row_c",
+      "data":
+       [{"coordinates":"C1", "status":"Not Attacked"},
+        {"coordinates":"C2", "status":"Not Attacked"},
+        {"coordinates":"C3", "status":"Not Attacked"},
+        {"coordinates":"C4", "status":"Not Attacked"}]},
+     {"name":"row_d",
+      "data":
+       [{"coordinates":"D1", "status":"Not Attacked"},
+        {"coordinates":"D2", "status":"Not Attacked"},
+        {"coordinates":"D3", "status":"Not Attacked"},
+        {"coordinates":"D4", "status":"Not Attacked"}]}]},
+ "winner":"nil"}
