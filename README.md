@@ -37,7 +37,7 @@ To run the test suite, run `rspec` from the root directory in your terminal afte
 * The spec harness used to drive functionality: [Spec Harness](https://github.com/turingschool-examples/battleshift_spec_harness)
 
 ## Deployment
-Visit the application deployed to Heroku [here](https://immense-woodland-83336.herokuapp.com/). Register for an account then check your email for your API key and account activation. This application requires [Postman](https://www.getpostman.com/) to post requests to the API.
+Visit the application deployed to Heroku [here](https://immense-woodland-83336.herokuapp.com/). Register for an account then check your email for your API key and account activation. This application requires [Postman](https://www.getpostman.com/) or your favorite tool to post HTTP requests to the API.
 
 ## Authors
 * [Margaret Williford](https://github.com/lilwillifo)
