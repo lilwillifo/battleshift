@@ -1,5 +1,23 @@
 <% if current_user.status == 'inactive' %>
   <%= 'This account has not yet been activated. Please check your email.' %>
 <% else %>
-  Status: Active
+  <p>Status: Active</p>
+
+  <p>Ahoy, you're ready to play!</p>
+
+  <p>All requests need to be made with a valid API key. Send that information in your header, formatted as key 'X-API-KEY' and value of your api key that you just recieved in your email.</p>
+
+  <p>To start a game, post a request to "/api/v1/games" with params "opponent_email: YOUR_OPPONENT_EMAIL" posted in the body of your request. Your opponent needs to be active in the system for this to work. Make note of your game id, as you will be using to place ships and shots.</p>
+
+  <p>To place your ships, send a post request to "/api/v1/games/#{game_id}/ships". Pass the following params in the body:</p>
+      <ul>
+        <li>ship_size: 3</li>
+        <li>start_space: "A1"</li>
+        <li>end_space: "A3"</li>
+      </ul>
+
+  <p>To shoot at your opponent's ship, send a post request to "/api/v1/games/#{game_id}/shots" with params of 'target: "YOUR_TARGET"' posted in the body.</p>
+
+  <p>May the odds be ever in your favor</p>
+
 <% end %>
